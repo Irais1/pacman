@@ -9,6 +9,7 @@
 		<div id="gameWindow">
 			<img id="pacman" src="images/pacman.gif">
 		</div>
+		<div id="output" style="color: white"></div>
 	</body>
 </html>
 
