@@ -9,7 +9,7 @@
 	<body onload="loadComplete()">
 		<div id="gameWindow">
 			<img id="pacman" src="images/pacman.gif">
-			<img id = "redGhost" src = "images/ghost_red.png">
+			<img id ="redGhost" src = "images/ghost_red.png">
 		</div>
 		<div id="output" style="color: white"></div>
 	</body>

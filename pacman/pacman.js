@@ -62,22 +62,6 @@ function loadComplete(){
 	createWall(280,280,40,40);
 	createWall(320,280,40,40);
 	
-	
-	
-// 	if(hittest(wall_1,pacman)){
-// 	    pacman.style.left = originalLeft;
-// 	    pacman.style.top = originalTop;
-// 	}
-// // 	wall_1 = document.createElement('div');
-// 	wall_1.setAttribute('id','wall_1');
-// 	wall_1.className = 'wall';
-// 	wall_1.style.left = '200px';
-// 	wall_1.style.top = '300px';
-// 	wall_1.style.height ='40px';
-// 	wall_1.style.width ='200px';
-// 	gameWindow.appendChild(wall_1);
-	
-	//output.innerHTML = pacman.src;
 }
 function createWall(left,top,width,height){
     var wall = document.createElement('div');
@@ -122,11 +106,14 @@ function loop(){
         pacman.style.left = originalLeft;
         pacman.style.top = originalTop;
     }
+    moveRedGhost();
     if(hittest(pacman,redGhost)){
         clearInterval(loopTimer);
     }
-    
-    //red Ghost
+
+ 
+}
+function moveRedGhost(){
     var rgX = parseInt(redGhost.style.left);
     var rgY = parseInt(redGhost.style.top);
     var rgNewDirection;
@@ -137,7 +124,9 @@ function loop(){
     else if(rgDirection ='down') rgOppositeDirection ='up';
     else if(rgDirection ='up') rgOppositeDirection ='down';
     // if(rgX>590) rgX = -30;
-    // redGhost.style.left = rgX +GHOST_SPEED+'px';'
+    do{
+     redGhost.style.left = rgX +'px';
+     redGhost.style.top = rgY+'px';
     do{
         var r = Math.floor(Math.random()*4);
         if(r == 0) rgNewDirection = 'right';
@@ -146,10 +135,24 @@ function loop(){
         else if(r == 3) rgNewDirection = 'up';
     }while(rgNewDirection == rgOppositeDirection);
     
-    if(hittest(pacman,redGhost)){
-        clearInterval(loopTimer);
+    if(rgNewDirection == 'right'){
+        if(rgX>590) rgX=-30;
+        redGhost.style.left = rgX + GHOST_SPEED +'px';
     }
- 
+    if(rgNewDirection == 'left'){
+        if(rgX<-30 ) rgX=590;
+        redGhost.style.left = rgX - GHOST_SPEED +'px';
+    }
+    if(rgNewDirection == 'down'){
+        if(rgY>390 ) rgY=-30;
+        redGhost.style.top = rgY + GHOST_SPEED +'px';
+    }
+    if(rgNewDirection == 'up'){
+        if(rgY <-30) rgY=390;
+        redGhost.style.top = rgY - GHOST_SPEED +'px';
+    }
+    }while(hitWall(redGhost));
+    rgDirection = rgNewDirection; 
 }
 function tryToChangeDirection(){
     var originalLeft = pacman.style.left;
@@ -198,44 +201,6 @@ function hitWall(element){
     }
     return hit;
 }
-// document.addEventListener('keydown',function(event){
-//   //output.innerHTML = event.keyCode;
-//   if(event.keyCode==37){
-//       //leftArrowDown = true;
-//       pacman.style.left = parseInt(pacman.style.left)-PACMAN_SPEED+'px';
-//       if(!hit()){
-//             direction = 'left';
-//             pacman.className ="flip-horizontal";
-//       }
-//   }
-//   if(event.keyCode==38){
-//         //upArrowDown = true;
-//         pacman.style.top = parseInt(pacman.style.top) - PACMAN_SPEED +'px';
-//         if(!hit()){
-//             direction = 'up';
-//             pacman.className ="rotate270";
-//         }
-//   }
-//   if(event.keyCode==39){
-//       //rightArrowDown = true;
-//       pacman.style.left = parseInt(pacman.style.left)+PACMAN_SPEED+'px';
-//       if(!hit()){
-//           direction = 'right';
-//           pacman.className ="";
-//       }
-//   }
-//   if(event.keyCode==40){
-//         //downArrowDown = true;
-//         pacman.style.top = parseInt(pacman.style.top)+PACMAN_SPEED+'px';
-//         if(!hit()){
-//             direction = 'down';
-//             pacman.className ="rotate90";
-//         }
-//   }
-//   pacman.style.left = originalLeft;
-//   pacman.style.top = originalTop;
-
-// });
 document.addEventListener('keydown',function(event){
     if(event.keyCode==37) leftArrowDown = true;
     if(event.keyCode==38) upArrowDown = true;
